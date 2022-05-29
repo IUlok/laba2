@@ -4,27 +4,27 @@ include io.asm
 .data
   array db 100 dup(?)
 .code
-.startup
-start:
-      InInt bx
+DelProbel MACRO count, array
       xor si, si
       mov cx, bx
 starting:
       mov ah,01h
       int 21h
       cmp al,' '
-      je probel
       jne ifelse
-probel:
       jmp cycle
 ifelse:
       mov array[si],al
       inc si
-      jmp cycle
 cycle:
       loop starting
       mov array[si], '$'
       newline
+endm
+.startup
+start:
+      InInt bx
+      DelProbel bx, array
       mov ah, 9
       lea dx, array
       int 21h
